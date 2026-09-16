@@ -32,7 +32,8 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 static void build_thread(World *w, Package *p)
 {
 	p->log_verbose("Build Thread");
-	p->log(boost::format{"Building (%1% others running)"} % (w->threadsRunning() - 1));
+	p->log_always(boost::format{"Building (%1% others running)"} %
+	              (w->threadsRunning() - 1));
 
 	try {
 		if(p->build(false, w->isFetchOnly())) {
@@ -50,7 +51,7 @@ static void build_thread(World *w, Package *p)
 	}
 	w->threadEnded();
 
-	p->log(boost::format{"Finished (%1% others running)"} % w->threadsRunning());
+	p->log_always(boost::format{"Finished (%1% others running)"} % w->threadsRunning());
 }
 
 static void process_package(World *w, Package *p, PackageQueue *pq)
